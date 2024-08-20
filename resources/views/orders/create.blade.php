@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    @if ($order->is_paid == true)
+                    @if ($order->is_paid)
                         <div class="card-header bg-success text-light" style="--bs-bg-opacity: .5;"> Order Detail
                         </div>
                     @else
@@ -28,6 +28,11 @@
                         @endif
                         <hr>
                         @foreach ($cartItems as $item)
+                            <td>
+                                <img style="max-height:100px ;"
+                                    src="{{ asset('storage/' . $item->post->image_posts ?? '') }}"
+                                    alt="{{ $item->category->name_categories }}" class="img-fluid rounded">
+                            </td>
                             <p>{{ $item->post->title_posts }} - Rp. {{ number_format($item->post->price, 0, ',', '.') }} pcs
                             </p>
                             @php

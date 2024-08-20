@@ -42,6 +42,11 @@
         @yield('container')
     </div>
 
+    <div class="whatsapp-button">
+        <a href="https://wa.me/6281351372291?text=Halo%2C%20Kak%20Saya%20ingin%20konsultasi%20dong" target="_blank">
+            <img src="{{ asset('img/image.png') }}" alt="WhatsApp" style="width: 50px; height: 50px;">
+        </a>
+    </div>
 
 
     <script src="/js/script.js"></script>

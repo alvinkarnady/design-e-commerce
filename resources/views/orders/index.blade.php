@@ -14,10 +14,11 @@
                                     <a href="{{ route('order.show', $order) }}">
                                         <h5 class="card-title">Order ID: {{ $order->id }}</h5>
                                     </a>
+
                                     <h6 class="card-subtitle mb-2 text-muted">By {{ $order->user->name_users }}
                                     </h6>
                                     <p class="card-text" style="font-size: 13px">
-                                        {{ $order->created_at->format(' d M Y - H:i') }}</p>
+                                        {{ $order->created_at->format('d M Y - H:i') }}</p>
 
                                     @if ($order->is_paid == true)
                                         <p class="card-text" style='color:#3fdb5b'>Sukses <i class='bx bx-check'></i></p>

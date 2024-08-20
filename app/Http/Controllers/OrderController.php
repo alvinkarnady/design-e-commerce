@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\View;
 View::composer('*', function ($view) {
     if (auth()->check()) {
         $cartItemCount = Cart::where('id_user', auth()->id())->count();
-        $view->with('cartItemCount', $cartItemCount);
+        $orderCount =  Order::where('is_paid', false)->count();
+        $view->with([
+            'cartItemCount' => $cartItemCount,
+            'orderCount' => $orderCount,
+        ]);
     }
 });
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $user = Auth::user();
@@ -30,6 +31,7 @@ class OrderController extends Controller
         } else {
             $orders = Order::where('id_user', $user->id)->latest()->get();
         }
+
         return view('orders.index', [
             'title' => 'Order',
             'active' => 'order',
@@ -65,6 +67,7 @@ class OrderController extends Controller
                 'id_user' => Auth::id(),
             ]);
         }
+
 
         return view('orders.create', [
             'title' => 'Order',
@@ -144,6 +147,7 @@ class OrderController extends Controller
         // dd($transaction[0]->post->price, $transaction[1]->post->price);
 
 
+
         $user = Auth::user();
         $is_admin = $user->is_admin;
 
@@ -151,8 +155,11 @@ class OrderController extends Controller
             return view('orders.create', [
                 'title' => 'Order',
                 'active' => 'order',
-            ], compact('cartItems', 'order'));
+                'cartItems' => $cartItems,
+                'order' => $order, // Pass the order object correctly
+            ]);
         }
+
         return Redirect::route('index_order');
     }
 

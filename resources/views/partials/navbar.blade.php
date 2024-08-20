@@ -40,46 +40,61 @@
                                 <li>
                                     <hr class="dropdown-divider border-primary">
                                 </li>
+                            @else
+                                <li><a class="dropdown-item" href="{{ route('order.index') }}"><i
+                                            class="fi fi-rs-registration-paper"></i>
+                                        Order</a></li>
+                                <li>
+                                    <hr class="dropdown-divider border-primary">
                             @endif
-                            <li><a class="dropdown-item" href="{{ route('order.index') }}"><i
-                                        class="fi fi-rs-registration-paper"></i>
-                                    Order</a></li>
-                            <li>
-                                <hr class="dropdown-divider border-primary">
-                            </li>
-                            <li>
-                                <form action="/logout" method="post">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
-                                        Logout</button>
-                                </form>
 
-                        </ul>
                     </li>
+                    <li>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                                Logout</button>
+                        </form>
 
-                    <!-- Cart Icon with Notification -->
-                    @if (!auth()->user()->is_admin)
-                        <li class="nav-item">
-                            <a href="/cart" class="nav-link position-relative">
-                                <i class="bi bi-cart"></i>
-                                @if ($cartItemCount > 0)
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        {{ $cartItemCount }}
-                                        <span class="visually-hidden">Keranjang</span>
-                                    </span>
-                                @endif
+                </ul>
+                </li>
 
-                            </a>
-                        </li>
-                    @endif
+                <!-- Cart Icon with Notification -->
+                @if (!auth()->user()->is_admin)
+                    <li class="nav-item">
+                        <a href="/cart" class="nav-link position-relative">
+                            <i class="bi bi-cart"></i>
+                            @if ($cartItemCount > 0)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $cartItemCount }}
+                                    <span class="visually-hidden">Keranjang</span>
+                                </span>
+                            @endif
+
+                        </a>
+                    </li>
                 @else
                     <li class="nav-item">
-                        <a href="/login" class="nav-link" {{ $active === 'login' ? 'active' : '' }}><i
-                                class="bi bi-box-arrow-in-right"></i> Login</a>
+                        <a href="{{ route('order.index') }}" class="nav-link position-relative">
+                            <i class="fi fi-rs-registration-paper"></i>
+                            @if ($orderCount > 0)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $orderCount }}
+                                    <span class="visually-hidden">Order List</span>
+                                </span>
+                            @endif
+                        </a>
                     </li>
+                @endif
+            @else
+                <li class="nav-item">
+                    <a href="/login" class="nav-link" {{ $active === 'login' ? 'active' : '' }}><i
+                            class="bi bi-box-arrow-in-right"></i> Login</a>
+                </li>
 
-                @endauth
+            @endauth
             </ul>
 
 

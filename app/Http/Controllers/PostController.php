@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
@@ -14,7 +15,11 @@ use PharIo\Manifest\Author;
 View::composer('*', function ($view) {
     if (auth()->check()) {
         $cartItemCount = Cart::where('id_user', auth()->id())->count();
-        $view->with('cartItemCount', $cartItemCount);
+        $orderCount =  Order::where('is_paid', false)->count();
+        $view->with([
+            'cartItemCount' => $cartItemCount,
+            'orderCount' => $orderCount,
+        ]);
     }
 });
 

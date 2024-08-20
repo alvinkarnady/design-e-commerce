@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -10,7 +11,11 @@ use Illuminate\Support\Facades\View;
 View::composer('*', function ($view) {
     if (auth()->check()) {
         $cartItemCount = Cart::where('id_user', auth()->id())->count();
-        $view->with('cartItemCount', $cartItemCount);
+        $orderCount =  Order::where('is_paid', false)->count();
+        $view->with([
+            'cartItemCount' => $cartItemCount,
+            'orderCount' => $orderCount,
+        ]);
     }
 });
 
